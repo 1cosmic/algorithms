@@ -3,6 +3,7 @@
 #include <vector>
 #include <random>
 #include <ranges>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,11 +25,13 @@ auto generate_array(int count, string mode) {
   vector<int> array;
 
   cout << "Generating array by mode: " << mode << endl;
-  if (mode == "random")
+  if (mode == "sorted_random") {
     for (int i = 0; i < count; i++) {
       auto random_value = rand() % 10;
       array.push_back(random_value);
     }
+   std::ranges::sort(array);
+  }
   else 
     exit(-1);
   
@@ -39,18 +42,32 @@ auto generate_array(int count, string mode) {
 // ==============================
 
 
-auto two_sum(vector<int> array) {
-  uint64_t res = 0;
+auto two_sum(vector<int> array, int target) {
 
-  for
+  int l = 0;
+  int r = array.size() -1;
 
-  return res;
+  int res;
+  while (l < r) {
+    res = array[l] + array[r];
+    if (target < res)
+      r--;
+    else if (target > res)
+      l++;
+    else
+      cout << "Finded values, what give " << target << ". Its: " << l << " & " << r << endl;
+      break;
+  }
+
+  return 0;
 }
 
 
 auto main() -> int
 {
-  auto array = generate_array(10, "random");
+  // auto array = generate_array(10, "random");
 
-  print_res(two_sum(array), "2sum");
+  vector<int> array = {3, 8, 9, 11, 16, 18, 19, 21};
+  int target = 25;
+  print_res(two_sum(array, target), "2sum");
 }
