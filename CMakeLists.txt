@@ -26,7 +26,7 @@ target_include_directories(
     "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
 )
 
-target_compile_features(algorithms_lib PUBLIC cxx_std_17)
+target_compile_features(algorithms_lib PUBLIC cxx_std_20)
 
 # ---- Declare executable ----
 
@@ -35,7 +35,7 @@ add_executable(algorithms::exe ALIAS algorithms_exe)
 
 set_property(TARGET algorithms_exe PROPERTY OUTPUT_NAME algorithms)
 
-target_compile_features(algorithms_exe PRIVATE cxx_std_17)
+target_compile_features(algorithms_exe PRIVATE cxx_std_20)
 
 target_link_libraries(algorithms_exe PRIVATE algorithms_lib)
 
