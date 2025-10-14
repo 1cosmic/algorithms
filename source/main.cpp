@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 
-#include "lib.hpp"
+// #include "lib.hpp"
+
+auto two_sum() {
+  auto res;
+  return res;
+}
+
 
 auto main() -> int
 {
-  auto const lib = library {};
-  auto const message = "Hello from " + lib.name + "!";
-  std::cout << message << '\n';
-  return 0;
+  two_sum();
 }
