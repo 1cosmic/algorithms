@@ -52,24 +52,18 @@ auto two_sum(vector<int> array, int target) {
 }
 
 
-auto reverse_array(vector<int> array) {
-  int buf;
-  vector<int> res = array;
-  int l = 0; int r = res.size() -1;
+auto reverse_array(vector<int> array, int l, int r) {
 
   cout << "Starting reversing array..." << endl; print_array(array); 
   while(l < r) {
-    buf = res[r];
-    res[r] = array[l];
-    res[l] = buf;
-
+    swap(array[l], array[r]);
     l++; r--;
   }
   cout << "Result: " << endl;
-  print_array(res);
+  print_array(array);
   cout << endl;
 
-  return res;
+  return array;
 }
 
 
@@ -157,10 +151,14 @@ auto main() -> int
   vector<int> array = {6, 8, 9, 11, 16, 18, 19, 21};
   int target = 25;
   two_sum(array, target);   // #1
-  reverse_array(array);     // #2
 
-  // # 3
-  // k_reverse_arr();
+  // # 2 & 3
+  array = {1, 2, 3, 4, 5, 6, 7};
+  auto k = 3;
+  auto end = array.size() -1;
+  array = reverse_array(array, 0, end);
+  array = reverse_array(array, 0, k -1);
+  array = reverse_array(array, k, end);
 
   // # 4
   auto arr1 = {3, 8, 10, 11};
