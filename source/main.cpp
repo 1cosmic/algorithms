@@ -68,7 +68,6 @@ auto reverse_array(vector<int> array, int l, int r) {
 
 
 auto merge2array(vector<int> arr1, vector<int> arr2) {
-  vector<int> res;
 
   int i = 0;
   int i2 = 0;
@@ -80,20 +79,17 @@ auto merge2array(vector<int> arr1, vector<int> arr2) {
   print_array(arr1);
   print_array(arr2);
 
-  while (i < s1 or i2 < s2) {
-    if (arr1[i] < arr2[i2] or i2 >= s2) {
-      v = arr1[i];
-      if (i < s1) i++;
+  // Не работает, следует идти с конца?
 
-    } else {
-      v = arr2[i2];
-      if (i2 < s2) i2++;
-    }
-    res.push_back(v);
-  }
-
+//   while (i < s1 or i2 < s2) {
+//     if (arr1[i] < arr2[i2]) {
+//       swap(arr1[i], arr2[i2]);
+//       i2++;
+//     }
+//     (i < s1) i++;
+// }
   cout << "Result: " << endl;
-  print_array(res);
+  print_array(arr1); print_array(arr2);
   cout << endl;
 }
 
@@ -161,7 +157,7 @@ auto main() -> int
   array = reverse_array(array, k, end);
 
   // # 4
-  auto arr1 = {3, 8, 10, 11};
+  auto arr1 = {3, 8, 10, 11, 0, 0, 0};
   auto arr2 = {1, 7, 9};
   merge2array(arr1, arr2);
 
