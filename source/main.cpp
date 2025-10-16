@@ -7,6 +7,9 @@
 
 using namespace std;
 
+// Forward declaration
+void print_array(vector<int> array);
+
 // System funcs.
 
 void print_array(vector<int> array) {
@@ -172,8 +175,6 @@ auto last_zero(vector<int> arr) {
       swap(arr[l], arr[r]); l++;
     }
     else r++;
-    // print_array(arr);
-    // cout << l << " " << r << endl;
   }
   cout << "Result: " << endl;
   print_array(arr);
@@ -214,7 +215,7 @@ auto main() -> int
   arr = {7, 3, 2, 4, 1, 11, 8, 9};
   first_even(arr);
 
-  // TODO
+  // # 8
   arr = {0, 33, 57, 88, 0, 0, 1};
   last_zero(arr);
 }
