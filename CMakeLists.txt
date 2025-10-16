@@ -2,6 +2,20 @@ cmake_minimum_required(VERSION 3.14)
 
 include(cmake/prelude.cmake)
 
+# macOS: ensure libc++ headers are visible to clang++
+if(APPLE AND NOT CMAKE_OSX_SYSROOT)
+  execute_process(COMMAND xcrun --show-sdk-path
+                  OUTPUT_VARIABLE SDK_PATH
+                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if(SDK_PATH AND EXISTS "${SDK_PATH}")
+    set(CMAKE_OSX_SYSROOT "${SDK_PATH}" CACHE PATH "macOS SDK" FORCE)
+  endif()
+endif()
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 project(
     algorithms
     VERSION 0.1.0
@@ -15,18 +29,18 @@ include(cmake/variables.cmake)
 
 # ---- Declare library ----
 
-add_library(
-    algorithms_lib OBJECT
-    source/lib.cpp
-)
+# add_library(
+#     algorithms_lib OBJECT
+#     source/lib.cpp
+# )
 
-target_include_directories(
-    algorithms_lib ${warning_guard}
-    PUBLIC
-    "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
-)
+# target_include_directories(
+#     # algorithms_lib ${warning_guard}
+#     PUBLIC
+#     "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
+# )
 
-target_compile_features(algorithms_lib PUBLIC cxx_std_20)
+# target_compile_features(algorithms_lib PUBLIC cxx_std_20)
 
 # ---- Declare executable ----
 
@@ -37,7 +51,7 @@ set_property(TARGET algorithms_exe PROPERTY OUTPUT_NAME algorithms)
 
 target_compile_features(algorithms_exe PRIVATE cxx_std_20)
 
-target_link_libraries(algorithms_exe PRIVATE algorithms_lib)
+# target_link_libraries(algorithms_exe PRIVATE algorithms_lib)
 
 # ---- Install rules ----
 

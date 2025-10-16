@@ -98,7 +98,7 @@ auto binary_sort(vector<int> arr) {
   int l = 0; int r = arr.size() -1;
   int buf;
 
-  cout << "Starting binary sort of array:" << endl;
+  cout << "Starting binary sort of array..." << endl;
   print_array(arr);
 
   while (l < r) {
@@ -122,7 +122,7 @@ auto thirdy_sort(vector<int> arr) {
   l = m = 0;
   r = arr.size() -1;
 
-  cout << "Starting thirdy sort of array:" << endl; print_array(arr);
+  cout << "Starting thirdy sort of array..." << endl; print_array(arr);
   while(m <= r) {
     if (arr[m] == 0) {
       swap(arr[l], arr[m]);
@@ -136,6 +136,46 @@ auto thirdy_sort(vector<int> arr) {
       m++;
   }
   cout << "Result:" << endl;
+  print_array(arr);
+  cout << endl;
+}
+
+
+auto first_even(vector<int> arr) {
+  
+  int l = 0;
+  int r = 0;
+
+  cout << "Starting swap all even to first..." << endl;
+  while (r < arr.size()) {
+    if (arr[r] % 2 == 0) {
+      swap(arr[l], arr[r]); l++;
+    }
+    else r++;
+    // print_array(arr);
+  }
+  cout << "Result: " << endl;
+  print_array(arr);
+  cout << endl;
+}
+
+
+auto last_zero(vector<int> arr) {
+  
+  int l = 0;
+  int r = 0;
+
+  cout << "Starting swap all zero to last..." << endl;
+  print_array(arr);
+  while (r < arr.size() and l < arr.size()) {
+    if (arr[r] == 0) {
+      swap(arr[l], arr[r]); l++;
+    }
+    else r++;
+    // print_array(arr);
+    // cout << l << " " << r << endl;
+  }
+  cout << "Result: " << endl;
   print_array(arr);
   cout << endl;
 }
@@ -157,9 +197,9 @@ auto main() -> int
   array = reverse_array(array, k, end);
 
   // # 4
-  auto arr1 = {3, 8, 10, 11, 0, 0, 0};
-  auto arr2 = {1, 7, 9};
-  merge2array(arr1, arr2);
+  // auto arr1 = {3, 8, 10, 11, 0, 0, 0};
+  // auto arr2 = {1, 7, 9};
+  // merge2array(arr1, arr2);
 
   // # 5
   auto arr = {0, 1, 1, 0, 1, 0, 1, 0};
@@ -169,4 +209,12 @@ auto main() -> int
   // arr = {2, 0, 2, 1, 1, 0};
   auto arr3 = generate_array(10, 3);
   thirdy_sort(arr3);
+
+  // # 7
+  arr = {7, 3, 2, 4, 1, 11, 8, 9};
+  first_even(arr);
+
+  // TODO
+  arr = {0, 33, 57, 88, 0, 0, 1};
+  last_zero(arr);
 }
