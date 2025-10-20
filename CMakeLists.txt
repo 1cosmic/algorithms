@@ -44,7 +44,8 @@ include(cmake/variables.cmake)
 
 # ---- Declare executable ----
 
-add_executable(algorithms_exe source/main.cpp)
+# add_executable(algorithms_exe source/main.cpp)
+add_executable(algorithms_exe source/list_2.cpp)
 add_executable(algorithms::exe ALIAS algorithms_exe)
 
 set_property(TARGET algorithms_exe PROPERTY OUTPUT_NAME algorithms)
