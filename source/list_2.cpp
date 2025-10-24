@@ -80,24 +80,21 @@ struct NodeList{
             Node* cur = head;
 
             if (cur->v == v) {
-                head = dummy;
-                head->next = last->next;
-                cout << "Was popped head of list." << endl;
-                return true;
-
-            } else {
-                while (cur->next != nullptr) {
-                    if (cur->v == v) {
-                        last->next = cur->next;
-                        size--;
-                        return true;
-                    }
-                    last = cur;
-                    cur = cur->next;
-                }
-                cout << "not found such element: " << v << endl;
-                return false;
+                head = cur->next;
+                delete cur; return true;
             }
+
+            while (cur->next != nullptr) {
+                if (cur->v == v) {
+                    last->next = cur->next;
+                    size--;
+                    return true;
+                }
+                last = cur;
+                cur = cur->next;
+            }
+            cout << "not found such element: " << v << endl;
+            return false;
         }; 
 
         // TODO: not working
@@ -111,7 +108,6 @@ struct NodeList{
                 cur->next = last;
                 last = cur;
                 cur = next;
-                // if (cur != nullptr) cout << last->v << " " << cur->v << " " << endl;
             }
             head = last;
         }
