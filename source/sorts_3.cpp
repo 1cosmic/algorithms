@@ -5,17 +5,38 @@
 #include <ranges>
 #include <algorithm>
 #include <map>
-
-using namespace std;
+#include <typeinfo>
 
 // System funcs.
-void print_array(vector<int> array) {
-  for (int n : array)
-    cout << n << ' ';
-  cout << endl;
+using namespace std;
+
+template<typename T>
+void print_array(vector<T> array);  // forward declaration.
+
+template<typename T>
+void print_array(vector<T> array) {
+    cout << "[";
+    for (auto n : array)
+        cout << n << ' ';
+    cout << "\b]" << endl;
 }
-// Forward declaration.
-void print_array(vector<int> array);
+
+// template<typename T>
+// void print_2d_vector(vector<vector<T>> vec);
+
+template<typename T>
+void print_2d_vector(vector<vector<T>> vec) {
+    cout << "\n[\n";
+    for (auto inner: vec) {
+        cout << "  [";
+        for (size_t i = 0; i < inner.size(); ++i) {
+            cout << inner[i] << ' ';
+        }
+        cout << "\b]\n";
+    }
+    cout << "]\n";
+}
+//
 
 
 int binary_sqrt(int target) {
@@ -100,6 +121,44 @@ vector<int> sum2element(vector<int> data, int target) {
 }
 
 
+auto polynomical_hash(string str, bool collision = false) {
+    long long hash = 0, mod = 1e9+7;
+    int x, k, m = 1;
+
+    if (collision) k = 1;
+    else k = 32;
+
+    for (char c: str) {
+        x = (int) c - 'a' + 1;
+        hash = (hash + x*m) % mod;
+        m = m*k % mod;
+    }
+    // cout << "Hash for '" << str << "' is: " << hash << endl;
+    return hash;
+}
+
+
+vector<vector<string>> group_how_anagrams(vector<string> data) {
+
+    long long hash;
+    bool with_collision = true;
+    map<long long, vector<string>> hash_anagrams;
+    
+    for (string anagram: data) {
+        hash = polynomical_hash(anagram, with_collision);
+        hash_anagrams[hash].push_back(anagram);
+    }
+
+    vector<vector<string>> res = {};
+    vector<string> grouped;
+    for (auto iter = hash_anagrams.begin(); iter != hash_anagrams.end(); iter++) {
+        grouped = iter->second;
+        res.push_back(grouped);
+    }
+    return res;
+}
+
+
 int main() {
     int sqrt_x;
 
@@ -141,6 +200,12 @@ int main() {
     cout << "5) Indices of 2 elements, what give: " << target << endl;
     cout << "from range: "; print_array(range);
     cout << "is: "; print_array(res); cout << endl;
+
+    vector<string> anagrams = {"eat", "tan", "nat", "tea", "bat", "ate"};
+    vector<vector<string>> grouped_anagrams;
+    grouped_anagrams = group_how_anagrams(anagrams);
+    cout << "6) Grouping anagrams: "; print_array(anagrams);
+    cout << "is: "; print_2d_vector(grouped_anagrams);
 
 
     return 0;
