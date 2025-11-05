@@ -83,6 +83,23 @@ int how_many_animals_can_be_eat(vector<int> animals, vector<int> foods) {
 }
 
 
+vector<int> sum2element(vector<int> data, int target) {
+    map<int, int> cash_data;
+
+    int diff, i = 0;
+    for (int v: data) cash_data[v] = i++;
+
+    i = 0;
+    for (int v: data) {
+        diff = target - v;
+        if (cash_data.contains(diff))
+            return {i, cash_data[diff]};
+        i++;
+    }
+    return {};
+}
+
+
 int main() {
     int sqrt_x;
 
@@ -110,13 +127,20 @@ int main() {
 
     vector<int> animals, foods;
     animals = {4, 3, 6, 1, 8, 6, 5, 8, 5};
-    // foods =   {4, 2, 5, 1, 7, 9, 4, 8};
     foods =   {1, 1, 1, 1, 8};
     cout << "4) Have animals: '" << animals.size() << "': "; print_array(animals);
     cout << "4) Have foods:   '" << foods.size() << "': "; print_array(foods);
     cout << "How many animals can be eat: ";
     cout << how_many_animals_can_be_eat(animals, foods);
     cout << endl << endl;
+
+    vector<int> range, res;
+    int target = 25;
+    range = {7, 4, 3, 6, 1, 2, 9, 8, 5, 16};
+    res = sum2element(range, target);
+    cout << "5) Indices of 2 elements, what give: " << target << endl;
+    cout << "from range: "; print_array(range);
+    cout << "is: "; print_array(res); cout << endl;
 
 
     return 0;
