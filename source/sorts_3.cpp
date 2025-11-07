@@ -159,6 +159,24 @@ vector<vector<string>> group_how_anagrams(vector<string> data) {
 }
 
 
+vector<int> sort_shell(vector<int> arr) {
+    int n = arr.size(), gap = (int) n / 2;
+    int cur_pos, cur_gap;
+
+    while (gap > 0) {
+        for (cur_pos = gap; cur_pos < n; cur_pos++) {
+            cur_gap = cur_pos;
+            while (cur_gap >= gap and arr[cur_gap - gap] > arr[cur_gap]) {
+                swap(arr[cur_gap - gap], arr[cur_gap]);
+                cur_gap -= gap;
+            }
+        }
+        gap = (int) gap / 2;
+    }
+    return arr;
+}
+
+
 int main() {
     int sqrt_x;
 
@@ -205,8 +223,10 @@ int main() {
     vector<vector<string>> grouped_anagrams;
     grouped_anagrams = group_how_anagrams(anagrams);
     cout << "6) Grouping anagrams: "; print_array(anagrams);
-    cout << "is: "; print_2d_vector(grouped_anagrams);
+    cout << "is: "; print_2d_vector(grouped_anagrams); cout << endl;
 
+    cout << "7) Sort by Shell of array: "; print_array(range);
+    cout << "Res: "; print_array(sort_shell(range));
 
     return 0;
 }
