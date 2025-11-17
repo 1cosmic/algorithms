@@ -29,12 +29,15 @@ class TreeNode {
             l = left; r = right;
         };
 
-        void print_BFS() {
+
+        bool search_BFS(bool is_symmetric = false) {
+            vector<int> res = {};
+            deque<int> symmetric = {};
             queue<TreeNode *> breadth;
-            breadth.push(this);
 
             int level = 1;
             int i = level;
+            breadth.push(this);
 
             cout << "tree by levels: \n0: ";
             while (!breadth.empty()) {
@@ -45,6 +48,8 @@ class TreeNode {
                     TreeNode *l = root->l; if (l) breadth.push(l);
                     TreeNode *r = root->r; if (r) breadth.push(r);
                     cout << root->v  << ", ";
+                    res.push_back(root->v);
+                    if (is_symmetric) symmetric.push_back(root->v);
                 }
                 breadth.pop();
 
@@ -53,9 +58,20 @@ class TreeNode {
                     cout << level << ": ";
                     i = pow(2, level);
                     level += 1;
+
+                    if (is_symmetric) 
+                        while (symmetric.size() > 1) {
+                            if (symmetric.front() == symmetric.back()) {
+                                symmetric.pop_front(); symmetric.pop_back();
+                            }
+                            else is_symmetric = false; break;
+                            }
+                        symmetric.pop_front();
                 };
             }
             cout << endl;
+
+            return is_symmetric;
         };
 };
 
@@ -72,17 +88,21 @@ TreeNode* build(vector<int> arr, int i = 0) {
 };
 
 
-
 int main() {
     cout << "HOMEWORK #4: binary trees and its algorithms." << endl << endl;
     vector<int> data2tree = {8, 9, 11, 7, 16, 3, 1};
 
-    cout << endl << "1) Revert binary tree u array." << endl;
-    cout << "arr: "; print_array(data2tree); cout << endl;
+    cout << endl << "1) Revert binary tree off array." << endl;
+    cout << "arr: "; print_array(data2tree);
     TreeNode *tree1 = build(data2tree, 0);
-    tree1->print_BFS(); cout << endl;
+    auto symmetric = tree1->search_BFS(true);
+    cout << "is symmetric: " << symmetric << endl;
 
-    cout << endl << "2) ..." << endl;
+    cout << endl << "2) Check only 'is symmetric?'" << endl;
+    vector<int> symmetric2tree = {1, 2, 2, 3, 4, 4, 3};
+    auto *tree2 = build(symmetric2tree, 0);
+    symmetric = tree2->search_BFS(true);
+    cout << "is symmetric: " << symmetric << endl;
 
 
     cout << endl << endl;
