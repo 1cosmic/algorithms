@@ -7,16 +7,15 @@
 
 using namespace std;
 
-
 template<typename T>
 void print_array(vector<T> array);  // forward declaration.
 
 template<typename T>
 void print_array(vector<T> array) {
-    cout << "[";
+    cout << "[ ";
     for (auto n : array)
         cout << n << ' ';
-    cout << "\b]" << endl;
+    cout << ']' << endl;
 }
 
 
@@ -28,7 +27,6 @@ class TreeNode {
             v = val;
             l = left; r = right;
         };
-
 
         bool search_BFS(bool is_symmetric = false) {
             vector<int> res = {};
@@ -54,19 +52,20 @@ class TreeNode {
                 breadth.pop();
 
                 if (i <= 0 and !breadth.empty()) {
-                    cout << "\b\b \n";
+                    cout << "\n";
                     cout << level << ": ";
                     i = pow(2, level);
                     level += 1;
 
-                    if (is_symmetric) 
+                    if (is_symmetric) {
                         while (symmetric.size() > 1) {
                             if (symmetric.front() == symmetric.back()) {
                                 symmetric.pop_front(); symmetric.pop_back();
                             }
-                            else is_symmetric = false; break;
+                            else {is_symmetric = false; break;}
                             }
                         symmetric.pop_front();
+                    }
                 };
             }
             cout << endl;
@@ -101,94 +100,6 @@ int get_min_h(TreeNode *root) {
 };
 
 
-int get_min_h_2(TreeNode *root, int count = 0) {
-    if (!root) return count;
-
-    count = count + 1;
-
-    // TODO: Проверь метод разделяющихся указателей: если дерево вырождено и один из указтелей > 0 - слушаем его.
-    // !!! Рекурсировать счётчики по нодам (распределить их по каналам) и собрать воедино, затем выбрать минимальный!
-    
-    return min(get_min_h_2(root->l, count), get_min_h_2(root->r, count));
-};
-
-
-void testDegenerateTrees() {
-    cout << "\n=== Degenerate Trees Tests ===" << endl;
-    
-    // Тест 5: Вырожденное влево (все узлы только слева)
-    //   1
-    //  /
-    // 2
-    ///
-    //3
-    TreeNode* root5 = new TreeNode(1, 
-        new TreeNode(2, 
-            new TreeNode(3), 
-            nullptr
-        ), 
-        nullptr
-    );
-    int result5 = get_min_h_2(root5);
-    cout << "Test 5 - Left degenerate: " << (result5 == 3 ? "PASS" : "FAIL") 
-         << " (expected: 3, got: " << result5 << ")" << endl;
-    delete root5->l->l;
-    delete root5->l;
-    delete root5;
-
-    // Тест 6: Вырожденное вправо (все узлы только справа)
-    //   1
-    //    \
-    //     2
-    //      \
-    //       3
-    TreeNode* root6 = new TreeNode(1, 
-        nullptr, 
-        new TreeNode(2, 
-            nullptr, 
-            new TreeNode(3)
-        )
-    );
-    int result6 = get_min_h_2(root6);
-    cout << "Test 6 - Right degenerate: " << (result6 == 3 ? "PASS" : "FAIL") 
-         << " (expected: 3, got: " << result6 << ")" << endl;
-    delete root6->r->r;
-    delete root6->r;
-    delete root6;
-
-    // Тест 7: Смешанное вырожденное (разная глубина ветвей)
-    //       1
-    //      / \
-    //     2   3
-    //    /     \
-    //   4       5
-    //  /
-    // 6
-    TreeNode* root7 = new TreeNode(1,
-        new TreeNode(2,
-            new TreeNode(4,
-                new TreeNode(6),
-                nullptr
-            ),
-            nullptr
-        ),
-        new TreeNode(3,
-            nullptr,
-            new TreeNode(5)
-        )
-    );
-    int result7 = get_min_h_2(root7);
-    cout << "Test 7 - Mixed depths: " << (result7 == 3 ? "PASS" : "FAIL") 
-         << " (expected: 3, got: " << result7 << ")" << endl;
-    delete root7->l->l->l;
-    delete root7->l->l;
-    delete root7->l;
-    delete root7->r->r;
-    delete root7->r;
-    delete root7;
-}
-
-
 int multi2extreme(vector<int> tree) {
     if (tree.size() <= 1) return -1;
 
@@ -204,11 +115,9 @@ int multi2extreme(vector<int> tree) {
             max = tree[r];
         }
         cout << "m:" << min << " | max: " << max << endl;
-        cout << "l:" << l << " | r: " << r << endl;
 
         l = l * 2 + 1;
         r = r * 2 + 2;
-
         i++;
     }
 
@@ -243,9 +152,8 @@ int main() {
 
     cout << endl << "3) What min h of tree?" << endl;
     data2tree = {11, 8, 18, 2, 9, 6, -1, 7, -1, -1, 9, -1, -1};
-    auto *tree3 = build(data2tree); tree3->search_BFS();
-    cout << "Min: " << get_min_h(tree3);
-    testDegenerateTrees();
+    auto *tree3 = build(data2tree, 0); tree3->search_BFS();
+    cout << "Min: " << get_min_h(tree3) << endl;
 
     cout << endl << "4) min(tree) * max(tree) of tree." << endl << "arr:";
     vector<int> extreme_tree = {16, 12, 18, 11, 15, 17, 21, -1, -1, -1, -1, -1, -1, 19, 24};
