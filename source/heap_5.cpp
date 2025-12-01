@@ -26,7 +26,6 @@ auto is_bunch(vector<int> arr, bool is_full=false) {
         l = 2*i + 1;
         r = 2*i + 2;
 
-        
         if (!is_full) {
             if (arr[root] < arr[l] or arr[root] < arr[r]) return false;
         }
@@ -35,8 +34,6 @@ auto is_bunch(vector<int> arr, bool is_full=false) {
             v_root = arr[root];
             v_l = arr[l];
             v_r = arr[r];
-
-            // cout << v_root << ' ' << v_l << ' ' << v_r << endl;
             
             if ((v_l < 0 and v_r < 0) or (v_l > 0 and v_r > 0)) continue;
             else return false;
@@ -209,7 +206,7 @@ int main() {
 
     cout << endl;
     cout << "4) compute balance_factor for previous tree:" << endl;
-    compute_balance(tree, true); cout << endl;
+    compute_balance(tree, true); cout << endl << endl;
 
     cout << endl;
     cout << "5) Mirror previous tree:" << endl;
