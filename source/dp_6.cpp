@@ -135,6 +135,42 @@ int min_sum_comb(vector<int> coins, int sum) {
 }
 
 
+int max_palindrome(string s) {
+
+    auto n = s.size();
+
+    if (n == 1) return 1;
+    if (n < 1)  return 0;
+
+    vector<vector<bool>> dp(n, vector<bool>(n, 0)); // create matrix {n x n} = 0
+
+    for (auto i = 0; i < s.size(); i++) {
+        dp[i][i] = 1;                               // 1) sequence(char) == 1
+        if (i < s.size() -1)
+            if (s[i] == s[i+1]) dp[i][i+1] = 1;     // 2) sequence(char) == 2
+    }
+
+    int c, i, j, best_i, best_j, best_palindrome;
+    best_palindrome = best_i = best_j = 0;
+
+    for (c = 2; c < s.size(); c++) {                // 3) for sequence(char) = 3..n
+        for (i = 0; i + c < s.size(); i++) {
+
+            j = i + c;
+            dp[i][j] = s[i] == s[j] && dp[i +1][j -1];
+
+            if (dp[i][j] and j > best_palindrome) {
+                best_palindrome = j - i + 1;
+                best_i = i; best_j = j;
+            }
+        }
+    }
+    // for (auto str: dp) print_array(str);
+
+    return best_palindrome;
+}
+
+
 int main() {
 
     int N = 3;
@@ -161,6 +197,16 @@ int main() {
     cout << endl << "5) Find min combs of coins {1, 3, 5, 7} for get sum '" << sum << "': " << endl;
     r = min_sum_comb(coins, sum);
     cout << "res: " << r << endl << endl;
+
+    string s = "baefbababd";
+    cout << "Max palindrome length in '" << s << "': " << endl;
+    r = max_palindrome(s);
+    cout << r << endl << endl;
+
+    s = "baefblxabd";
+    cout << "Max palindrome length in '" << s << "': " << endl;
+    r = max_palindrome(s);
+    cout << r << endl << endl;
 
     return 0;
 }
