@@ -124,6 +124,8 @@ int balanced_brackets(auto str, int k) {
 
 
 int main() {
+    cout << "Homeworks of prefix sums." << endl;
+    cout << "Created by Michael Kolobakhin" << endl << endl;
 
     vector<int> arr = {1, 2, 4, 5, 9, 1};
     vector<int> arr2 = {1,2,4,5,9,1,3,5,6,3,1,2,5,2,8,9,6,1,8,5,2,1,8};
